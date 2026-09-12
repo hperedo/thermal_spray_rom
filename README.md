@@ -294,3 +294,12 @@ For questions, collaborations, or to report issues, please contact:
 *Centro de Innovación en Manufactura Avanzada (CIMA),
 Instituto Tecnológico de Estudios Superiores de Monterrey (ITESM),
 Campus Querétaro, México*
+
+## Support and Sponsorship
+
+If you would like to support or sponsor this project, please contact
+the maintainers at humberto.peredo@tec.mx or hperedo1@yahoo.com.mx.
+
+We welcome sponsorship that is consistent with open-science principles.
+Sponsors do not influence the technical direction, results, or
+publication decisions of this project.
