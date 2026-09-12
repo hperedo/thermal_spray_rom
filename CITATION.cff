@@ -1,0 +1,122 @@
+# SPDX-License-Identifier: CC0-1.0
+# Citation File Format (CFF) v1.2.0
+# Spec: https://citation-file-format.github.io/
+
+cff-version: 1.2.0
+message: "If you use this software or the associated data in your work, please cite both the paper and the software archive as described below."
+
+title: "Thermal Spray ROM Comparison — 1D Flattening Analysis"
+abstract: >-
+  Reduced-order modeling (ROM) framework for particle flattening dynamics in
+  thermal spray, benchmarked against Nishioka and Fukumoto's (2000)
+  experimental Re–ξ data for nickel particles (40, 80, and 120 µm).
+  The framework constructs a full-order model from discrete Re–ξ measurements,
+  fits Schiller–Naumann drag and power-law correlations, and applies four ROM
+  methods — Time-Derivative Decomposition (TD), Jacobian-Projection (JK-P),
+  Jacobian-Galerkin with RK4 integrator (JK-G_RK4), and Jacobian-Galerkin with
+  exponential integrator (JK-G_Exp). Performance is evaluated with energy
+  retention, peak error, phase error, and FRF H₂ error, and compared against
+  the theoretical Jones, Madejski, and Mostaghimi flattening models.
+
+type: software
+
+authors:
+  - family-names: "Peredo Fuentes"
+    given-names: "Humberto"
+    email: "humberto.peredo@tec.mx"
+    affiliation: >-
+      Centro de Innovación en Manufactura Avanzada (CIMA),
+      Instituto Tecnológico de Estudios Superiores de Monterrey (ITESM),
+      Campus Querétaro, México
+    orcid: "https://orcid.org/0000-0000-0000-0000"   # ← replace with real ORCID
+
+  - family-names: "Martinez Villegas"
+    given-names: "I."
+    affiliation: >-
+      Centro de Innovación en Manufactura Avanzada (CIMA),
+      Instituto Tecnológico de Estudios Superiores de Monterrey (ITESM),
+      Campus Querétaro, México
+    orcid: "https://orcid.org/0000-0000-0000-0000"   # ← replace with real ORCID
+
+contact:
+  - family-names: "Peredo Fuentes"
+    given-names: "Humberto"
+    email: "humberto.peredo@tec.mx"
+    affiliation: >-
+      Centro de Innovación en Manufactura Avanzada (CIMA),
+      Instituto Tecnológico de Estudios Superiores de Monterrey (ITESM),
+      Campus Querétaro, México
+
+version: "1.0.0"
+date-released: "2026-01-01"        # ← replace with actual release date (YYYY-MM-DD)
+
+doi: "10.5281/zenodo.XXXXXXX"      # ← replace with real Zenodo DOI after first release
+url: "https://github.com/[your-username]/thermal_spray_rom"
+
+repository-code: "https://github.com/[your-username]/thermal_spray_rom"
+repository-artifact: "https://doi.org/10.5281/zenodo.XXXXXXX"
+
+license: MIT
+license-url: "https://opensource.org/license/mit"
+
+keywords:
+  - thermal spray
+  - reduced-order modeling
+  - ROM
+  - Krylov-Arnoldi
+  - Galerkin projection
+  - particle flattening
+  - splat formation
+  - Nishioka
+  - Schiller-Naumann
+  - Madejski
+  - Mostaghimi
+  - frequency response function
+  - computational fluid dynamics
+  - nickel particles
+
+programming-language: "Python"
+programming-language-version: ">=3.12"
+
+references:
+  - type: article
+    title: >-
+      Reduced-Order Modeling of Particle Flattening Dynamics: A Benchmark
+      Study of Krylov–Arnoldi Methods Using Nishioka's Experimental Data
+    authors:
+      - family-names: "Peredo Fuentes"
+        given-names: "Humberto"
+      - family-names: "Martinez Villegas"
+        given-names: "I."
+    journal: "Journal of Thermal Spray Technology"
+    year: 2026
+    doi: "10.1007/XXXXXXX"        # ← replace with real paper DOI after publication
+
+  - type: article
+    title: >-
+      Investigation of Flattening Behavior of Thermal Sprayed Particle
+      Based on Measured Data
+    authors:
+      - family-names: "Nishioka"
+        given-names: "E."
+      - family-names: "Fukumoto"
+        given-names: "M."
+    journal: "Quarterly Journal of the Japan Welding Society"
+    volume: 18
+    issue: 2
+    start: 259
+    end: 268
+    year: 2000
+
+  - type: software
+    title: >-
+      Thermal Spray ROM Comparison — 1D Flattening Analysis
+    authors:
+      - family-names: "Peredo Fuentes"
+        given-names: "Humberto"
+      - family-names: "Martinez Villegas"
+        given-names: "I."
+    version: "1.0.0"
+    year: 2026
+    doi: "10.5281/zenodo.XXXXXXX"
+    url: "https://github.com/[your-username]/thermal_spray_rom"
