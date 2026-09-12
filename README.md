@@ -1,6 +1,3 @@
-# thermal_spray_rom
-Thermal Spray ROM Comparison — 1D Flattening Analysis
-
 <!--
 SPDX-License-Identifier: CC-BY-4.0
 Copyright (c) 2026 H. Peredo Fuentes & I. Martinez Villegas
