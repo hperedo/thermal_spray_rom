@@ -253,7 +253,7 @@ A `CITATION.cff` file is provided for automated citation managers.
 
 This project uses a **dual-license** structure:
 
-- **Code** (all `.py` files): **MIT License** — see [`LICENSE`](LICENSE) for the full text.
+- **Code** (all `.py` files): **MIT License** — see [`LICENSE`](LICENSE.txt) for the full text.
 - **Documentation** (`README.md`, figures, and other non-code content):
   **Creative Commons Attribution 4.0 International (CC BY 4.0)** — see
   [`LICENSE-CC-BY-4.0.txt`](LICENSE-CC-BY-4.0.txt) for the full text.
@@ -266,7 +266,7 @@ following attribution in a prominent location:
 > **Peredo Fuentes, H. & Martinez Villegas, I. (2026).**
 > *Thermal Spray ROM Comparison — 1D Flattening Analysis* (v1.0.0).
 > Zenodo. DOI: [10.5281/zenodo.22729593](https://doi.org/10.5281/zenodo.22729593)
-> Original source: <https://github.com/[your-username]/thermal_spray_rom>
+> Original source: <https://github.com/hperedo/thermal_spray_rom>
 > Licensed under MIT (code) and CC BY 4.0 (documentation).
 
 ### Your Rights
