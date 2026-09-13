@@ -76,6 +76,56 @@ def power_law(Re, a, b, c):
     return a * Re**b + c
 
 # =============================================
+# TEMPERATURE-DEPENDENT VISCOSITY OF NICKEL (Eq. 4)
+# =============================================
+# Constants from Nishioka & Fukumoto (2000), Fig. 9(b).
+# Viscosity fit: eta(T) = 0.1663 * exp(6038 / T)  [Pa.s]
+# The equivalent Arrhenius form anchored at the melting point is
+#   eta(T) = eta_mp * exp[ (E/R) * (1/T - 1/T_mp) ]
+# with E/R = 6038 K  =>  E = 6038 * 8.314 = 50,200 J/mol.
+T_melt_Ni = 1728.0            # K,   melting point of Nickel
+eta_mp_Ni = 5.48e-3           # Pa.s, dynamic viscosity at T = T_melt_Ni
+E_visc_Ni = 50200.0           # J/mol, activation energy (Nishioka Fig. 9b)
+R_gas     = 8.314             # J/(mol.K), universal gas constant
+
+# =============================================
+# THERMOPHYSICAL PROPERTIES OF NICKEL (Table 1)
+# =============================================
+# Values from Nishioka & Fukumoto (2000), Fig. 9 and Table 1.
+# These constants are used by flattening_models() to compute the
+# dimensionless numbers Re, We, Pe, and Ste.
+rho_mp_Ni     = 7900.0        # kg/m^3,    density at T = T_melt (Fig. 9a)
+gamma_mp_Ni   = 1.78          # N/m,       surface tension at T_melt (Fig. 9c)
+alpha_Ni      = 2.3e-5        # m^2/s,     thermal diffusivity (Table 1)
+c_p_Ni        = 444.0         # J/(kg.K),  specific heat capacity (Table 1)
+L_fusion_Ni   = 2.92e5        # J/kg,      latent heat of fusion (Table 1)
+T_substrate   = 723.0         # K,         substrate temperature (Fig. 2c)
+
+# Temperature-dependent coefficients (used if a temperature-dependent
+# density or surface-tension model is enabled in future work):
+rho_0_Ni      = 1.16          # kg/(m^3.K), Nishioka Fig. 9a
+gamma_0_Ni    = 3.8e-4        # N/(m.K),   Nishioka Fig. 9c
+
+def viscosity_Ni(T):
+    """
+    Temperature-dependent dynamic viscosity of molten Nickel.
+
+    Arrhenius form anchored at the melting point:
+
+        eta(T) = eta_mp * exp[ (E/R) * (1/T - 1/T_mp) ]
+
+    For T > T_mp the argument of the exponential is negative, so
+    eta decreases with increasing temperature, as reported by
+    Nishioka & Fukumoto (2000), Fig. 9(b).
+
+    For T < T_mp the value is clipped to eta_mp (no undercooled
+    branch is modelled).
+    """
+    T_eff = np.maximum(T, T_melt_Ni)
+    return eta_mp_Ni * np.exp(
+        E_visc_Ni / R_gas * (1.0 / T_eff - 1.0 / T_melt_Ni)
+    )
+# =============================================
 # THEORETICAL FLATTENING MODELS (for reference)
 # =============================================
 def jones_model(Re):
@@ -139,6 +189,63 @@ def mostaghimi_model(Re, We, Ste, Pe):
                 xi_out[idx] = np.sqrt(We[idx] / 3) * (1 - solid_term)**(-1)
                 xi_out[idx] = max(1.0, min(xi_out[idx], 3.5))
     return xi_out
+
+# =============================================
+# COMPREHENSIVE FLATTENING MODELS WRAPPER (Listing 10)
+# =============================================
+def flattening_models(v, T, d_p):
+    """
+    Compute the dimensionless numbers Re, We, Pe, Ste and evaluate the
+    Jones, Madejski, and Mostaghimi flattening models.
+
+    Notes
+    -----
+    The outputs of this helper are clipped to physically reasonable
+    bounds (xi in [1, 4] for Jones/Madejski, [1, 3.5] for Mostaghimi).
+    The error metrics reported in Table 5 of the manuscript are computed
+    on the UNCLIPPED model outputs (direct calls to jones_model,
+    madejski_model, mostaghimi_model), NOT through this wrapper.
+
+    Parameters
+    ----------
+    v   : float or array
+          Particle impact velocity [m/s].
+    T   : float or array
+          Particle temperature [K].
+    d_p : float or array
+          Particle diameter [m].
+
+    Returns
+    -------
+    dict
+        Keys: 'xi_jones', 'xi_madejski', 'xi_mostaghimi',
+              'Re', 'We', 'Ste', 'Pe'.
+    """
+    v   = np.asarray(v)
+    T   = np.asarray(T)
+    d_p = np.asarray(d_p)
+
+    eta = viscosity_Ni(T)
+
+    Re = rho_mp_Ni * v * d_p / eta                  # Eq. 8
+    We = rho_mp_Ni * v**2 * d_p / gamma_mp_Ni       # Eq. 9
+    Pe = v * d_p / alpha_Ni                         # Eq. 10
+    Ste = c_p_Ni * (T - T_substrate) / L_fusion_Ni  # Eq. 11
+
+# Note: the error metrics reported in Table 5 of the manuscript are
+# computed on the UNCLIPPED outputs of jones_model, madejski_model,
+# and mostaghimi_model. The clips below are a design choice to keep
+# the wrapper's outputs within physically reasonable bounds
+# (1 <= xi <= 4) and are applied only to this helper function.
+
+    xi_jones      = np.clip(jones_model(Re),              1.0, 4.0)
+    xi_madejski   = np.clip(madejski_model(Re, We),       1.0, 4.0)
+    xi_mostaghimi = np.clip(mostaghimi_model(Re, We, Ste, Pe), 1.0, 3.5)
+
+    return {'xi_jones':      xi_jones,
+            'xi_madejski':   xi_madejski,
+            'xi_mostaghimi': xi_mostaghimi,
+            'Re': Re, 'We': We, 'Ste': Ste, 'Pe': Pe}
 
 # =============================================
 # CREATE FULL MODEL SIGNAL FROM EXPERIMENTAL DATA
@@ -1010,6 +1117,10 @@ def run_multi_size_analysis(save_dir="flattening_multi_size"):
 
         # After the fitting for each size, print the parameters
         print(f"\n=== Fitting results for {label} ===")
+        def _term(value):
+            """Format a signed term for a linear fit equation."""
+            sign = "-" if value < 0 else "+"
+            return f"{sign} {abs(value):.4f}"        
         print(f"Schiller-Naumann: a = {popt_schiller[0]:.4f}, b = {popt_schiller[1]:.4f}")
         print(f"Power Law: a = {popt_power[0]:.4f}, b = {popt_power[1]:.4f}, c = {popt_power[2]:.4f}")
         # Compute RMSE and R² (you can compute these yourself)
@@ -1435,6 +1546,25 @@ def run_multi_size_analysis(save_dir="flattening_multi_size"):
 # MAIN
 # =============================================
 if __name__ == "__main__":
+    for T in (1728.0, 2000.0, 2500.0, 2800.0):
+        eta = viscosity_Ni(T)
+        eta_ref = 0.1663e-3 * np.exp(6038.0 / T)   # Pa·s, Nishioka Fig. 9b
+        print(f"T = {T:6.1f} K   eta = {eta:.4e} Pa.s   "
+              f"Nishioka fit = {eta_ref:.4e} Pa.s")
+
+    # Quick smoke test of flattening_models
+    out = flattening_models(v=100.0, T=2500.0, d_p=80e-6)
+    print("flattening_models smoke test (v=100 m/s, T=2500 K, d_p=80 um):")
+    print(f"  Re = {out['Re']:.0f}")
+    print(f"  We = {out['We']:.1f}")
+    print(f"  Pe = {out['Pe']:.1f}")
+    print(f"  Ste = {out['Ste']:.3f}")
+    print(f"  xi_Jones      = {out['xi_jones']:.3f}")
+    print(f"  xi_Madejski   = {out['xi_madejski']:.3f}")
+    print(f"  xi_Mostaghimi = {out['xi_mostaghimi']:.3f}")
+
+    # ... run_multi_size_analysis_with_spl ...
+
     # Run with SPL option
     all_results, all_fits = run_multi_size_analysis_with_spl(save_dir="flattening_multi_size")
     print("\nAnalysis complete. Figures saved to flattening_multi_size/")
