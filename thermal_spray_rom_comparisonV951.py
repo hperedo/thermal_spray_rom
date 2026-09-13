@@ -8,14 +8,45 @@
 # This source code is licensed under the MIT License.
 # Documentation and figures are licensed under CC BY 4.0 (see LICENSE-CC-BY-4.0.txt).
 """
+Thermal Spray ROM Comparison - 1D Flattening Analysis (v1.0.0)
+==========================================================================
+Reproduces all figures and tables in:
+  Peredo Fuentes, H. & Martinez Villegas, I. (2026).
+  "Reduced-Order Modeling of Particle Flattening Dynamics: A Benchmark
+  Study of Krylov-Arnoldi Methods Using Nishioka's Experimental Data",
+  Journal of Thermal Spray Technology.
+
+Pipeline:
+  - Processes all three particle sizes (small, medium, large)
+  - Applies four ROM methods (TD, JK-P, JK-G_RK4, JK-G_Exp)
+  - Generates overlapped plots: full signals, reconstructions, fits, FRF, metrics
+  - Produces three FRF figures:
+      1. Overlay_FRF.png                    - spatial frequency (1/Re)
+      2. Overlay_FRF_vs_Hz_Physical.png     - physical frequency (Hz)
+      3. Overlay_FRF_vs_Hz_Physical_SPL.png - physical frequency (Hz), dB SPL
+  - Prints publication-ready LaTeX tables to stdout.
+
 NISHIOKA FLATTENING: MULTI-SIZE ROM ANALYSIS WITH OVERLAPPED FRF (FIXED)
 ==========================================================================
 - Processes all three particle sizes (small, medium, large)
 - Applies ROM methods (TD, JK-P, JK-G_RK4, JK-G_Exp)
 - Generates overlapped plots: full signals, reconstructions, fits, FRF, metrics
 - Includes TWO FRF plots:
-  1. Overlay_FRF.png - spatial frequency (1/Re)
-  2. Overlay_FRF_vs_Hz_Physical.png - frequency (Hz) using physical time scale
+1. SPDX header
+2. Module docstring
+3. Imports
+4. nishioka_exp_data dict                       ← input data
+5. schiller_naumann, schiller_fit, power_law    ← fitting helpers
+6. Viscosity block (constants + viscosity_Ni)   ← thermodynamic constants
+7. jones_model                                  ← theoretical model 1
+8. madejski_model                               ← theoretical model 2
+9. mostaghimi_model                             ← theoretical model 3
+10. flattening_models                           ← wrapper (NEW)
+11. create_full_model_signal                    ← signal construction
+12. timederivative_reduction, ...               ← ROM methods
+13. Overlay_FRF.png - spatial frequency (1/Re)
+14. Overlay_FRF_vs_Hz_Physical.png - frequency (Hz) using physical time scale
+
 """
 
 import numpy as np
