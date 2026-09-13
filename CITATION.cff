@@ -28,7 +28,7 @@ authors:
       Centro de Innovación en Manufactura Avanzada (CIMA),
       Instituto Tecnológico de Estudios Superiores de Monterrey (ITESM),
       Campus Querétaro, México
-    orcid: "https://orcid.org/0000-0000-0000-0000"   # ← replace with real ORCID
+    orcid: "https://orcid.org/0009-0002-9632-7042"   # ← replace with real ORCID
 
   - family-names: "Martinez Villegas"
     given-names: "I."
@@ -36,7 +36,7 @@ authors:
       Centro de Innovación en Manufactura Avanzada (CIMA),
       Instituto Tecnológico de Estudios Superiores de Monterrey (ITESM),
       Campus Querétaro, México
-    orcid: "https://orcid.org/0000-0000-0000-0000"   # ← replace with real ORCID
+    orcid: "https://orcid.org/0009-0004-5612-7542"   # ← replace with real ORCID
 
 contact:
   - family-names: "Peredo Fuentes"
@@ -50,11 +50,11 @@ contact:
 version: "1.0.0"
 date-released: "2026-01-01"        # ← replace with actual release date (YYYY-MM-DD)
 
-doi: "10.5281/zenodo.XXXXXXX"      # ← replace with real Zenodo DOI after first release
-url: "https://github.com/[your-username]/thermal_spray_rom"
+doi: "10.5281/zenodo.22729594"      # ← replace with real Zenodo DOI after first release
+url: "https://github.com/hperedo/thermal_spray_rom"
 
-repository-code: "https://github.com/[your-username]/thermal_spray_rom"
-repository-artifact: "https://doi.org/10.5281/zenodo.XXXXXXX"
+repository-code: "https://github.com/hperedo/thermal_spray_rom"
+repository-artifact: "https://doi.org/10.5281/zenodo.22729594"
 
 license: MIT
 license-url: "https://opensource.org/license/mit"
