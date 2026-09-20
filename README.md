@@ -3,8 +3,8 @@ SPDX-License-Identifier: CC-BY-4.0
 Copyright (c) 2026 H. Peredo Fuentes & I. Martinez Villegas
 
 Thermal Spray ROM Comparison — 1D Flattening Analysis (v1.0.0).
-Zenodo DOI: 10.5281/zenodo.22729593
-Original source: https://github.com/[your-username]/thermal_spray_rom
+Zenodo DOI: 10.5281/zenodo.22729594
+Original source: https://github.com/hperedo/thermal_spray_rom
 
 Documentation licensed under CC BY 4.0. Code licensed under MIT.
 -->
@@ -14,7 +14,7 @@ Documentation licensed under CC BY 4.0. Code licensed under MIT.
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
-[![DOI](https://zenodo.org/badge/1367580914.svg)](https://doi.org/10.5281/zenodo.22729593)
+[![DOI](https://zenodo.org/badge/1367580914.svg)](https://doi.org/10.5281/zenodo.22729594)
 
 Reduced-order modeling (ROM) framework for particle flattening dynamics in
 thermal spray, benchmarked against Nishioka and Fukumoto's (2000) experimental
@@ -240,7 +240,7 @@ both the paper and the software archive:
   version   = {v1.0.0},
   year      = {2026},
   publisher = {Zenodo},
-  doi       = {10.5281/zenodo.22729593},
+  doi       = {10.5281/zenodo.22729594},
   url       = {https://github.com/hperedo/thermal_spray_rom}
 }
 ```
@@ -265,7 +265,7 @@ following attribution in a prominent location:
 
 > **Peredo Fuentes, H. & Martinez Villegas, I. (2026).**
 > *Thermal Spray ROM Comparison — 1D Flattening Analysis* (v1.0.0).
-> Zenodo. DOI: [10.5281/zenodo.22729593](https://doi.org/10.5281/zenodo.22729593)
+> Zenodo. DOI: [10.5281/zenodo.22729594](https://doi.org/10.5281/zenodo.22729594)
 > Original source: <https://github.com/hperedo/thermal_spray_rom>
 > Licensed under MIT (code) and CC BY 4.0 (documentation).
 
