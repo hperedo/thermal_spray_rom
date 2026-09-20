@@ -2,7 +2,7 @@
 # Copyright (c) 2026 H. Peredo Fuentes & I. Martinez Villegas
 #
 # Thermal Spray ROM Comparison — 1D Flattening Analysis (v1.0.0)
-# Zenodo DOI: 10.5281/zenodo.22729593
+# Zenodo DOI: 10.5281/zenodo.22729594
 # Original source: https://github.com/hperedo/thermal_spray_rom
 #
 # This source code is licensed under the MIT License.
